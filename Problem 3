@@ -1,0 +1,86 @@
+#include<bits/stdc++.h>
+using namespace std;
+bool cmp(pair<pair<int,int>,int>a,pair<pair<int,int>,int>b)
+{
+    if(a.first.first<b.first.first)
+    return true;
+    else if(a.first.first>b.first.first)
+    return false;
+    if(a.first.second<b.first.second)
+    return true;
+    return false;
+}
+int main()
+{
+    int t;
+    cin>>t;
+    int cas=0;
+    while(t--)
+    {
+        cas++;
+        cout<<"Case #"<<cas<<": ";
+        int n;
+        cin>>n;
+        vector<pair<pair<int,int>,int>>a(n);
+        for(int i=0;i<n;i++)
+        {
+            cin>>a[i].first.first>>a[i].first.second;
+            a[i].second=i;
+        }
+        sort(a.begin(),a.end(),cmp);
+        // for(int i=0;i<n;i++)
+        // cout<<a[i].first<<" "<<a[i].second<<endl;
+        string ans="";
+        char cc[2]={'C','J'};
+        int flag=0;
+        vector<pair<pair<int,int>,int>>coder[2];
+        for(int i=0;i<(n-1);i++)
+        {
+            if(a[i].first.second>a[i+1].first.first)
+            {
+                coder[flag].push_back(a[i]);
+                ans+=cc[flag];
+                flag=1-flag;
+            }
+            else
+            {
+                coder[flag].push_back(a[i]);
+                ans+=cc[flag];
+            }
+        }
+        coder[flag].push_back(a[n-1]);
+        ans+=cc[flag];
+        flag=0;
+        for(int i=0;i<2;i++)
+        {
+            if(coder[i].size()>0)
+            {
+                for(int j=0;j<(coder[i].size()-1);j++)
+                {
+                    if(coder[i][j].first.second>coder[i][j+1].first.first)
+                    {
+                        ans="IMPOSSIBLE";
+                        i=19;
+                        break;
+                    }
+                }
+            }
+        }
+        if(ans=="IMPOSSIBLE")
+        cout<<ans<<endl;
+        else
+        {
+            vector<char>fin(n);
+            for(int i=0;i<2;i++)
+            {
+                for(int j=0;j<coder[i].size();j++)
+                {
+                    fin[coder[i][j].second]=cc[i];
+                }
+            }
+            for(int i=0;i<n;i++)
+            cout<<fin[i];
+            cout<<endl;
+        }
+    }
+}
