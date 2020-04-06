@@ -1,0 +1,38 @@
+#include<bits/stdc++.h>
+using namespace std;
+int main()
+{
+    int t;
+    cin>>t;
+    int cas=0;
+    while(t--)
+    {
+        cas++;
+        cout<<"Case #"<<cas<<": ";
+        string s;
+        cin>>s;
+        string ans="";
+        int noc=0;
+        for(int i=0;i<s.size();i++)
+        {
+            int r=s[i]-'0';
+            while(noc>r)
+            {
+                ans+=')';
+                noc--;
+            }
+            while(noc<r)
+            {
+                ans+='(';
+                noc++;
+            }
+            ans+=s[i];
+        }
+        while(noc>0)
+        {
+            ans+=')';
+            noc--;
+        }
+        cout<<ans<<endl;
+    }
+}
